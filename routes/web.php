@@ -9,11 +9,15 @@ Route::get('/', function () {
 
 
 
-Route::prefix('/blog')->group(function(){
-    Route::get('/', [BlogController::class, 'index']);
+Route::prefix('/blog')->controller(BlogController::class) ->group(function(){
+    Route::get('/', 'index');
+
+    Route::get('/new', 'create');
+
+    Route::post('/new', 'store');
     
-    Route::get('/{slug}-{id}', [\App\Htpp\Controllers\BlogController::class, 'showArticle'])->where([
+    Route::get('/{slug}-{id}', 'showArticle')->where([
         'slug' => '[a-z0-9\-]+',
         'id' => '[0-9]+'
-    ]);
+    ])->name('show');
 });
